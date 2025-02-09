@@ -1,0 +1,94 @@
+body{
+  background-color: aqua;
+  padding: 0;
+  margin: 0;
+}
+
+.head ul{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+ margin: 0;
+ background-color: #191919;
+ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+.head ul li{
+
+ list-style: none;
+ padding: 0;
+ margin: 0;
+}
+
+
+nav ul li a {
+  text-decoration: none;  /* Supprime le soulignement */
+  font-weight: bold;      /* Texte en gras */
+ color: white;
+  padding: 10px 15px;     /* Espacement interne */
+  border-radius: 5px;     /* Coins arrondis */
+  transition: 0.3s;       /* Animation fluide */
+}
+
+nav ul li a:hover {
+  background-color: lightblue;  /* Fond bleu clair au survol */
+}
+
+.new_element{
+  float: right;
+  margin-right: 50px;
+  outline: none;
+ 
+
+
+  
+}
+
+.new_element a{
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(17, 16, 16);
+  padding: 10px 15px;
+  border-radius: none;
+  transition: 0.3s;
+  outline: none;
+ 
+
+}
+.bloc_fragment{
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+.fragment {
+  width: 300px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  vertical-align: top;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fragment:hover {
+  transform: scale(1.03); /* Effet zoom au survol */
+  box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.fragment h2 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.fragment p {
+  font-size: 1rem;
+  color: #555;
+}
