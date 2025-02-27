@@ -9,7 +9,7 @@ const Header = () => {
           <li><Link to="/">Code Wallet</Link></li>
           <li><Link to="/fragment">Fragment</Link></li>
           <li><Link to="/tag">Tag</Link></li>
-          <li><img src={info} alt="description" /></li>
+          <li> <Link to="/about"><img src={info} alt="description" /> </Link></li>
         </ul>
       </nav>
     </header>
