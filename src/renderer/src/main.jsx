@@ -7,6 +7,7 @@ import Tag from "./page/tag";
 import Form from './page/formulaire';
 import Header from "./page/header";  
 import About from './page/about';
+import TagDetail from './page/tagDetail';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/fragment" element={<Fragment />} />
         <Route path="/tag" element={<Tag />} />
         <Route path="/about" element={<About />} />
+        <Route path="/tag/:tagName" element={<TagDetail />} />
         <Route path="/formulaire" element={<Form />} />
       </Routes>
     </Router>

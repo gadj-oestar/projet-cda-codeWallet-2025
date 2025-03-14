@@ -1,5 +1,12 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body{
-  background-color: rgb(30, 59, 38);
+  background-color: rgb(43, 32, 84);
   padding: 0;
   margin: 0;
 }
@@ -43,6 +50,8 @@ nav ul li a:hover {
   border-radius: 30px;
   padding: 10px ;
   margin-top: 25px;  
+  border: none !important;
+  box-shadow: 2px 10px 10px rgba(24, 24, 24, 0.283);
 }
 
 .new_element a{
@@ -57,25 +66,30 @@ nav ul li a:hover {
 
 }
 .bloc_fragment{
-
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 50px;
-}
-.fragment {
-  width: 300px;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-  background-color: #fff;
-  border-radius: 5px;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-  transition: 0.3s;
-  vertical-align: top;
-  text-align: left;
-  cursor: pointer;
+  grid-gap: 10px;
+  width: 100%;
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr 1fr;
+    
+  }
+
+  .fragment {
+    padding: 20px;
+    height: 90px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: left;
+    cursor: pointer;
+  }
+
+
 }
+
 
 .fragment:hover {
   transform: scale(1.03); /* Effet zoom au survol */
@@ -113,6 +127,10 @@ nav ul li a:hover {
   text-align: center;
   color: #333;
 }
+.e_tag{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+}
 
 .close {
   position: absolute;
@@ -123,16 +141,27 @@ nav ul li a:hover {
 }
 .modal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgb(91, 91, 91);
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 20px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  width: 300px;
+  width: 100%;
   text-align: center;
   border-radius: 10px;
+  /* backdrop-filter: blur(5px); */
+  animation: blurAnimination 200ms ease-in forwards;
+}
+
+@keyframes blurAnimination {
+  0% {
+    background: rgba(91, 91, 91, 0);
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.683);
+  }
 }
 
 .modal-content {
@@ -164,12 +193,12 @@ nav ul li a:hover {
   color: white;
 }
 
-.modal-actions button:last-child {
-  background-color: red;
+.delete {
+  background-color: rgb(248, 59, 59);
   color: white;
 }
 
-.delete, .edit {
+.delete, .edit , .eye {
   background: none;
   border: none;
   cursor: pointer;
@@ -180,8 +209,8 @@ nav ul li a:hover {
 .no_fragment{
   font-weight: bold;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  text-align: center;
-  font-size: 2rem;
+  width: 100%;
+  font-size: 1rem;
 }
 ul {
   list-style-type: none;
@@ -196,7 +225,7 @@ a {
   text-decoration: none;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: 200;
-  color: rgb(10, 10, 10);
+  color: rgb(255, 255, 255);
   margin: 20px;
 
 }
@@ -216,8 +245,8 @@ a {
   align-self: center;
 margin-right: auto;
 margin-left: auto;
-width: 50%;
-background-color: rgb(96, 94, 94);  
+width: 30%;
+background-color: rgb(49, 48, 48);  
 padding: 30px;
 
 }
@@ -227,7 +256,7 @@ padding: 30px;
   margin-top: 10px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: 200;
-  color: rgb(10, 10, 10);
+  color: white;
   display: block;
   text-align: left ;
 }
@@ -327,3 +356,84 @@ input:checked + .theme-slider:before {
 p,h2{
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+/* Conteneur principal */
+.about-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Titres des sections */
+.about-container h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 10px;
+  border-bottom: 3px solid #007BFF;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Paragraphe */
+.about-container p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Liste des points */
+.about-container ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.about-container ul li {
+  font-size: 16px;
+  background: #007BFF;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-container ul li strong {
+  color: #FFD700;
+}
+
+/* Icône des puces */
+.about-container ul li::before {
+  content: "✔";
+  color: #FFD700;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Espacement entre les sections */
+.about-container .developer,
+.about-container .legal {
+  margin-bottom: 30px;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-container {
+  animation: fadeIn 0.8s ease-in-out;
+}
+

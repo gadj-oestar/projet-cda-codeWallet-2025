@@ -83,18 +83,19 @@ function Fragment() {
               <h2>{fragment.title}</h2>
               <p>{fragment.tag}</p>
               {/* Bouton Supprimer */}
+                
               <button onClick={() => deleteFragment(fragment.id)} className='delete' >
                 <FaTrash size={20} color="red" />
               </button>
               {/* Bouton Modifier */}
-              <button onClick={() => openEditModal(fragment)} className='edit' >
+              <button onClick={() => openEditModal(fragment)} className="edit" >
                 <FaEdit size={20} color="blue" />
               </button>
 
               {/* Icône pour ouvrir la modale d'affichage */}
-              <div style={{ fontSize: "34px", cursor: "pointer", marginTop: '10px' }} onClick={() => openModal(fragment)}>
-                <AiOutlineEye />
-              </div>
+              <button onClick={() => openModal(fragment)} className="eye" >
+                <AiOutlineEye  size={22}/>
+              </button>
             </div>
           ))
         ) : (

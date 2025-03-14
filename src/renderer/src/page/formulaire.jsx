@@ -28,21 +28,7 @@ function Form() {
     } catch (error) {
       console.error("❌ Erreur lors de l'ajout du fragment :", error);
     }
-    try {
-      const response = await window.api.addFragment({ title, tag });
-      setLoading(false);
-      if (response.success) {
-        console.log("✅ Fragment ajouté avec succès");
-        navigate('/fragment');
-      } else {
-        console.error("❌ Échec de l'ajout du fragment");
-        setError('Échec de l\'ajout du fragment');
-      }
-    } catch (error) {
-      console.error("❌ Erreur lors de l'ajout du fragment :", error);
-      setLoading(false);
-      setError('Erreur lors de l\'ajout du fragment');
-    }
+    
   };
 
   return (
