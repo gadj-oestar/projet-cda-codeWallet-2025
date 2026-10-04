@@ -1,26 +1,27 @@
-import './assets/main.css';
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Fragment from "./page/fragment";
-import Tag from "./page/tag";
-import Form from './page/formulaire';
-import Header from "./page/header";  
-import About from './page/about';
-import TagDetail from './page/tagDetail';
+import './styles.css'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import Layout from './components/Layout'
+import FragmentsPage from './pages/FragmentsPage'
+import NewFragmentPage from './pages/NewFragmentPage'
+import TagsPage from './pages/TagsPage'
+import TagDetailPage from './pages/TagDetailPage'
+import AboutPage from './pages/AboutPage'
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Router>
-      <Header />
+    <HashRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/fragment" replace />} /> 
-        <Route path="/fragment" element={<Fragment />} />
-        <Route path="/tag" element={<Tag />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/tag/:tagName" element={<TagDetail />} />
-        <Route path="/formulaire" element={<Form />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/fragment" replace />} />
+          <Route path="/fragment" element={<FragmentsPage />} />
+          <Route path="/formulaire" element={<NewFragmentPage />} />
+          <Route path="/tag" element={<TagsPage />} />
+          <Route path="/tag/:tagName" element={<TagDetailPage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Route>
       </Routes>
-    </Router>
+    </HashRouter>
   </React.StrictMode>
-);
+)

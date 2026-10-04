@@ -1,10 +1,9 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron'
 
-console.log('🚀 Le fichier preload.js a bien été chargé !');
-
+// API exposée au renderer sous window.api
 contextBridge.exposeInMainWorld('api', {
   getFragments: () => ipcRenderer.invoke('getFragments'),
   addFragment: (fragment) => ipcRenderer.invoke('addFragment', fragment),
   updateFragment: (fragment) => ipcRenderer.invoke('updateFragment', fragment),
-  deleteFragment: (id) => ipcRenderer.invoke('deleteFragment', id),
-});
+  deleteFragment: (id) => ipcRenderer.invoke('deleteFragment', id)
+})
