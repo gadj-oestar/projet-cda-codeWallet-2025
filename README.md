@@ -34,4 +34,11 @@ npm install        # installation
 npm run dev        # développement
 npm run lint       # vérification du code
 npm run build:win  # build Windows (aussi build:mac, build:linux)
+npm run build:web  # version web dans dist-web/
 ```
+
+## Version web (Netlify)
+
+L'interface peut aussi tourner dans un navigateur. Sans Electron, les fragments sont gardés dans le `localStorage` du navigateur (`services/browserStore.js`) au lieu de SQLite : chaque visiteur a ses propres données.
+
+`netlify.toml` contient déjà la configuration. Sur Netlify : Add new site, Import an existing project, GitHub, puis choisir ce dépôt. Netlify lit la commande et le dossier de publication tout seul.

@@ -1,0 +1,10 @@
+# Version web de Code Wallet. Les données sont stockées dans le navigateur (localStorage).
+[build]
+  command = "npm run build:web"
+  publish = "dist-web"
+
+[build.environment]
+  NODE_VERSION = "20"
+  # Pas besoin d'Electron ni de SQLite pour la version web.
+  NPM_FLAGS = "--ignore-scripts"
+  ELECTRON_SKIP_BINARY_DOWNLOAD = "1"
