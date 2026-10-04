@@ -697,11 +697,21 @@ ul {
     flex-direction: row;
   }
 
+  .nav-link {
+    white-space: nowrap;
+  }
+
   .theme-toggle {
     margin: 0 0 0 auto;
   }
 
   .content {
     padding: 24px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-link span {
+    display: none;
   }
 }
