@@ -1,34 +1,44 @@
-# bloc_note_cda2025
+# Code Wallet
 
-An Electron application with React
+Application de bureau (Electron + React) pour enregistrer et classer des fragments de code par tag. Les données restent en local dans une base SQLite.
 
-## Recommended IDE Setup
+## Fonctionnalités
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- Créer, modifier, consulter et supprimer des fragments (titre, tag et code)
+- Lister les tags, renommer un tag ou le supprimer avec ses fragments
+- Thème clair ou sombre, mémorisé entre deux lancements
 
-## Project Setup
+## Structure
 
-### Install
-
-```bash
-$ npm install
+```
+src/
+  main/                    Processus principal Electron
+    index.js               Création de la fenêtre
+    database.js            Connexion SQLite et création de la table
+    fragmentRepository.js  Requêtes SQL sur les fragments
+    ipcHandlers.js         Canaux IPC exposés au renderer
+  preload/index.js         Pont sécurisé : window.api
+  renderer/src/            Interface React
+    main.jsx               Routes
+    styles.css             Styles et thèmes
+    components/            Layout, cartes, formulaire, modale…
+    hooks/                 useFragments, useTheme
+    pages/                 Une page par route
+    services/fragmentApi.js  Accès à window.api
 ```
 
-### Development
+## Commandes
 
 ```bash
-$ npm run dev
+npm install        # installation
+npm run dev        # développement
+npm run lint       # vérification du code
+npm run build:win  # build Windows (aussi build:mac, build:linux)
+npm run build:web  # version web dans dist-web/
 ```
 
-### Build
+## Version web (Netlify)
 
-```bash
-# For windows
-$ npm run build:win
+L'interface peut aussi tourner dans un navigateur. Sans Electron, les fragments sont gardés dans le `localStorage` du navigateur (`services/browserStore.js`) au lieu de SQLite : chaque visiteur a ses propres données.
 
-# For macOS
-$ npm run build:mac
-
-# For Linux
-$ npm run build:linux
-```
+`netlify.toml` contient déjà la configuration. Sur Netlify : Add new site, Import an existing project, GitHub, puis choisir ce dépôt. Netlify lit la commande et le dossier de publication tout seul.
