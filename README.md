@@ -4,7 +4,7 @@ Application de bureau (Electron + React) pour enregistrer et classer des fragmen
 
 ## Fonctionnalités
 
-- Créer, modifier, consulter et supprimer des fragments
+- Créer, modifier, consulter et supprimer des fragments (titre, tag et code)
 - Lister les tags, renommer un tag ou le supprimer avec ses fragments
 - Thème clair ou sombre, mémorisé entre deux lancements
 

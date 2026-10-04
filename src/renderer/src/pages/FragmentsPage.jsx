@@ -88,7 +88,7 @@ function FragmentsPage() {
       )}
 
       {edited && (
-        <Modal title="Modifier le fragment" onClose={() => setEdited(null)}>
+        <Modal title="Modifier le fragment" onClose={() => setEdited(null)} wide>
           <FragmentForm
             initialValues={edited}
             submitLabel="Enregistrer"

@@ -8,6 +8,7 @@ function FragmentCard({ fragment, onView, onEdit, onDelete }) {
       <Link to={`/tag/${encodeURIComponent(fragment.tag)}`} className="tag">
         #{fragment.tag}
       </Link>
+      {fragment.content && <pre className="code-preview">{fragment.content}</pre>}
 
       <div className="card-actions">
         <button type="button" className="icon-button" onClick={onView} aria-label="Voir">

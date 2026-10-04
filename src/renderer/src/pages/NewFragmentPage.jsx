@@ -13,7 +13,10 @@ function NewFragmentPage() {
 
   return (
     <>
-      <PageHeader title="Nouveau fragment" subtitle="Donnez un titre et un tag à votre fragment." />
+      <PageHeader
+        title="Nouveau fragment"
+        subtitle="Donnez un titre, un tag et le code à conserver."
+      />
       <div className="card form-card">
         <FragmentForm
           submitLabel="Créer le fragment"

@@ -68,7 +68,8 @@ a {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
   color: inherit;
 }
@@ -320,6 +321,22 @@ ul {
   word-break: break-word;
 }
 
+.code-preview {
+  width: 100%;
+  /* bordure plutôt que padding : la 4e ligne est coupée net, sans dépasser */
+  max-height: calc(4.8em + 16px);
+  overflow: hidden;
+  border: solid var(--bg);
+  border-width: 8px 10px;
+  border-radius: var(--radius-small);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre;
+}
+
 .card-actions {
   display: flex;
   gap: 2px;
@@ -407,7 +424,15 @@ ul {
 
 /* Formulaires */
 .form-card {
-  max-width: 480px;
+  max-width: 640px;
+}
+
+.code-input {
+  resize: vertical;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  tab-size: 2;
 }
 
 .form {
@@ -426,7 +451,8 @@ ul {
   font-weight: 550;
 }
 
-.field input {
+.field input,
+.field textarea {
   padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius-small);
@@ -434,7 +460,8 @@ ul {
   transition: border-color 0.15s;
 }
 
-.field input:focus {
+.field input:focus,
+.field textarea:focus {
   outline: none;
   border-color: var(--accent);
 }
@@ -490,7 +517,7 @@ ul {
 
 .modal {
   width: 100%;
-  max-width: 440px;
+  max-width: 560px;
   max-height: 100%;
   overflow-y: auto;
   padding: 20px 24px 24px;

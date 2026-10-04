@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-// Formulaire titre + tag, utilisé pour la création et la modification d'un fragment.
+// Formulaire titre, tag et code, utilisé pour la création et la modification d'un fragment.
 function FragmentForm({ initialValues, submitLabel, onSubmit, onCancel }) {
   const [title, setTitle] = useState(initialValues?.title ?? '')
   const [tag, setTag] = useState(initialValues?.tag ?? '')
+  const [content, setContent] = useState(initialValues?.content ?? '')
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
@@ -12,7 +13,7 @@ function FragmentForm({ initialValues, submitLabel, onSubmit, onCancel }) {
     setSaving(true)
     setError('')
     try {
-      await onSubmit({ title: title.trim(), tag: tag.trim() })
+      await onSubmit({ title: title.trim(), tag: tag.trim(), content })
     } catch (err) {
       setError(err.message)
       setSaving(false)
@@ -43,6 +44,19 @@ function FragmentForm({ initialValues, submitLabel, onSubmit, onCancel }) {
           placeholder="Ex. : javascript"
           value={tag}
           onChange={(event) => setTag(event.target.value)}
+        />
+      </div>
+
+      <div className="field">
+        <label htmlFor="fragment-content">Code</label>
+        <textarea
+          id="fragment-content"
+          className="code-input"
+          rows={10}
+          spellCheck={false}
+          placeholder="Collez votre code ici"
+          value={content}
+          onChange={(event) => setContent(event.target.value)}
         />
       </div>
 
