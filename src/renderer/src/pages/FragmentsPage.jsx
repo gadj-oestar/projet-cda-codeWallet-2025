@@ -12,6 +12,11 @@ import { useFragments } from '../hooks/useFragments'
 import { pluralize } from '../utils/format'
 import { filterFragments, groupByTag } from '../utils/tags'
 
+// Durée de l'animation de sortie d'une carte (voir .is-leaving dans styles.css).
+const LEAVE_DURATION = 200
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 function NewFragmentButton({ label }) {
   return (
     <Link to="/formulaire" className="button button-primary">
@@ -27,15 +32,20 @@ function FragmentsPage() {
   const [activeTag, setActiveTag] = useState(null)
   const [viewed, setViewed] = useState(null)
   const [edited, setEdited] = useState(null)
+  const [leavingId, setLeavingId] = useState(null)
 
   const visible = filterFragments(fragments, { search, tag: activeTag })
 
   const handleDelete = async (fragment) => {
     if (!window.confirm(`Supprimer le fragment « ${fragment.title} » ?`)) return
+    setLeavingId(fragment.id)
+    await wait(LEAVE_DURATION)
     try {
       await deleteFragment(fragment.id)
     } catch (err) {
       window.alert(err.message)
+    } finally {
+      setLeavingId(null)
     }
   }
 
@@ -66,10 +76,12 @@ function FragmentsPage() {
 
     return (
       <section className="grid">
-        {visible.map((fragment) => (
+        {visible.map((fragment, index) => (
           <FragmentCard
             key={fragment.id}
             fragment={fragment}
+            index={index}
+            leaving={fragment.id === leavingId}
             onView={() => setViewed(fragment)}
             onEdit={() => setEdited(fragment)}
             onDelete={() => handleDelete(fragment)}

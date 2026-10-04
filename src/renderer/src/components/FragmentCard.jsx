@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
 import { FiEye, FiEdit2, FiTrash2 } from 'react-icons/fi'
 
-function FragmentCard({ fragment, onView, onEdit, onDelete }) {
+function FragmentCard({ fragment, index, leaving, onView, onEdit, onDelete }) {
   return (
-    <article className="card fragment-card">
+    <article
+      className={`card fragment-card ${leaving ? 'is-leaving' : ''}`}
+      style={{ '--index': index }}
+    >
       <h2 className="fragment-title">{fragment.title}</h2>
       <Link to={`/tag/${encodeURIComponent(fragment.tag)}`} className="tag">
         #{fragment.tag}

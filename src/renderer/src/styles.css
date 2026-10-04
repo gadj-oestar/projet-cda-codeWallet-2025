@@ -54,6 +54,9 @@
 }
 
 body {
+  transition:
+    background-color 0.25s,
+    color 0.25s;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
@@ -576,10 +579,11 @@ ul {
   place-items: center;
   padding: 24px;
   background: var(--overlay);
-  animation: fade-in 0.15s ease-out;
+  animation: fade-in 0.2s ease-out;
 }
 
 .modal {
+  animation: pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2);
   width: 100%;
   max-width: 560px;
   max-height: 100%;
@@ -713,5 +717,153 @@ ul {
 @media (max-width: 480px) {
   .nav-link span {
     display: none;
+  }
+}
+
+/* Animations
+   Entrée des pages, apparition en cascade des cartes, survols et retours visuels.
+   Toutes sont coupées si le système demande moins de mouvement. */
+:root {
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes spin-in {
+  from {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page {
+  animation: slide-up 0.3s var(--ease-out);
+}
+
+/* Les cartes arrivent l'une après l'autre (40 ms d'écart, plafonné à 12 cartes). */
+.fragment-card,
+.tag-list li {
+  animation: slide-up 0.35s var(--ease-out) backwards;
+  animation-delay: calc(min(var(--index, 0), 12) * 40ms);
+}
+
+.fragment-card,
+.tag-card {
+  transition:
+    transform 0.2s var(--ease-out),
+    box-shadow 0.2s,
+    border-color 0.15s,
+    opacity 0.2s;
+}
+
+.fragment-card:hover,
+.tag-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.fragment-card.is-leaving {
+  opacity: 0;
+  transform: scale(0.92);
+  pointer-events: none;
+}
+
+.button {
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    transform 0.15s var(--ease-out),
+    box-shadow 0.15s;
+}
+
+.button-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.25);
+}
+
+.button:active:not(:disabled),
+.icon-button:active,
+.chip:active,
+.copy-button:active {
+  transform: scale(0.95);
+}
+
+.icon-button,
+.chip {
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.icon-button:hover svg {
+  transform: scale(1.12);
+}
+
+.icon-button svg {
+  transition: transform 0.15s var(--ease-out);
+}
+
+.brand-logo {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.brand:hover .brand-logo {
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.nav-link svg {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.nav-link:hover svg {
+  transform: translateX(2px);
+}
+
+.theme-icon {
+  display: inline-flex;
+  animation: spin-in 0.35s var(--ease-out);
+}
+
+.empty-state {
+  animation: slide-up 0.35s var(--ease-out);
+}
+
+.copy-button svg {
+  animation: spin-in 0.25s var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import { FiCode, FiTag, FiInfo, FiMoon, FiSun } from 'react-icons/fi'
 import { useTheme } from '../hooks/useTheme'
 
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
 
 function Layout() {
   const { theme, toggleTheme } = useTheme()
+  const { pathname } = useLocation()
   const isDark = theme === 'dark'
 
   return (
@@ -32,13 +33,18 @@ function Layout() {
         </nav>
 
         <button type="button" className="theme-toggle" onClick={toggleTheme}>
-          {isDark ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
+          <span key={theme} className="theme-icon">
+            {isDark ? <FiSun aria-hidden="true" /> : <FiMoon aria-hidden="true" />}
+          </span>
           <span>{isDark ? 'Thème clair' : 'Thème sombre'}</span>
         </button>
       </aside>
 
       <main className="content">
-        <Outlet />
+        {/* La clé change à chaque page : l'animation d'entrée se rejoue. */}
+        <div key={pathname} className="page">
+          <Outlet />
+        </div>
       </main>
     </div>
   )

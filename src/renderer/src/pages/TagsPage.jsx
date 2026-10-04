@@ -22,8 +22,8 @@ function TagsPage() {
         />
       ) : (
         <ul className="tag-list">
-          {tags.map(({ name, count }) => (
-            <li key={name}>
+          {tags.map(({ name, count }, index) => (
+            <li key={name} style={{ '--index': index }}>
               <Link to={`/tag/${encodeURIComponent(name)}`} className="card tag-card">
                 <span className="tag-card-name">#{name}</span>
                 <span className="tag-card-count">{count}</span>
