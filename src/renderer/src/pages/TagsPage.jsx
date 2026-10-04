@@ -2,17 +2,8 @@ import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import EmptyState from '../components/EmptyState'
 import { useFragments } from '../hooks/useFragments'
-
-// Regroupe les fragments par tag : [{ name, count }], triés par ordre alphabétique.
-function groupByTag(fragments) {
-  const counts = new Map()
-  for (const { tag } of fragments) {
-    counts.set(tag, (counts.get(tag) ?? 0) + 1)
-  }
-  return [...counts]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => a.name.localeCompare(b.name))
-}
+import { pluralize } from '../utils/format'
+import { groupByTag } from '../utils/tags'
 
 function TagsPage() {
   const { fragments, loading, error } = useFragments()
@@ -20,10 +11,7 @@ function TagsPage() {
 
   return (
     <>
-      <PageHeader
-        title="Tags"
-        subtitle={loading ? 'Chargement…' : `${tags.length} tag${tags.length > 1 ? 's' : ''}`}
-      />
+      <PageHeader title="Tags" subtitle={loading ? 'Chargement…' : pluralize(tags.length, 'tag')} />
 
       {error && <p className="form-error">{error}</p>}
 

@@ -12,12 +12,19 @@ function readInitialTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme
+}
+
+// Appliqué dès le chargement du module pour éviter un flash du mauvais thème.
+applyTheme(readInitialTheme())
+
 // Thème clair / sombre, mémorisé entre deux lancements.
 export function useTheme() {
   const [theme, setTheme] = useState(readInitialTheme)
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme
+    applyTheme(theme)
     try {
       localStorage.setItem(STORAGE_KEY, theme)
     } catch {

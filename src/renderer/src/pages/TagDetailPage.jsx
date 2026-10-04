@@ -4,6 +4,7 @@ import { FiArrowLeft } from 'react-icons/fi'
 import PageHeader from '../components/PageHeader'
 import { useFragments } from '../hooks/useFragments'
 import { fragmentApi } from '../services/fragmentApi'
+import { pluralize } from '../utils/format'
 
 function TagDetailPage() {
   const { tagName } = useParams()
@@ -34,7 +35,7 @@ function TagDetailPage() {
   }
 
   const handleDelete = async () => {
-    const message = `Supprimer le tag « ${tagName} » et ses ${tagged.length} fragment(s) ?`
+    const message = `Supprimer le tag « ${tagName} » et ${pluralize(tagged.length, 'fragment')} ?`
     if (!window.confirm(message)) return
 
     try {
@@ -56,7 +57,7 @@ function TagDetailPage() {
 
       <PageHeader
         title={`#${tagName}`}
-        subtitle={loading ? 'Chargement…' : `${tagged.length} fragment(s)`}
+        subtitle={loading ? 'Chargement…' : pluralize(tagged.length, 'fragment')}
       />
 
       <div className="tag-detail">

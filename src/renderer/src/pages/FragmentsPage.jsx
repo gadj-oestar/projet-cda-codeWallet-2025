@@ -1,26 +1,34 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FiPlus } from 'react-icons/fi'
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
-import javascript from 'react-syntax-highlighter/dist/esm/languages/prism/javascript'
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import PageHeader from '../components/PageHeader'
 import EmptyState from '../components/EmptyState'
+import FilterBar from '../components/FilterBar'
 import FragmentCard from '../components/FragmentCard'
 import FragmentForm from '../components/FragmentForm'
+import CodeViewer from '../components/CodeViewer'
 import Modal from '../components/Modal'
 import { useFragments } from '../hooks/useFragments'
+import { pluralize } from '../utils/format'
+import { filterFragments, groupByTag } from '../utils/tags'
 
-SyntaxHighlighter.registerLanguage('javascript', javascript)
-
-function countLabel(count) {
-  return `${count} fragment${count > 1 ? 's' : ''}`
+function NewFragmentButton({ label }) {
+  return (
+    <Link to="/formulaire" className="button button-primary">
+      <FiPlus aria-hidden="true" />
+      {label}
+    </Link>
+  )
 }
 
 function FragmentsPage() {
   const { fragments, loading, error, updateFragment, deleteFragment } = useFragments()
+  const [search, setSearch] = useState('')
+  const [activeTag, setActiveTag] = useState(null)
   const [viewed, setViewed] = useState(null)
   const [edited, setEdited] = useState(null)
+
+  const visible = filterFragments(fragments, { search, tag: activeTag })
 
   const handleDelete = async (fragment) => {
     if (!window.confirm(`Supprimer le fragment « ${fragment.title} » ?`)) return
@@ -36,51 +44,69 @@ function FragmentsPage() {
     setEdited(null)
   }
 
-  return (
-    <>
-      <PageHeader
-        title="Fragments"
-        subtitle={loading ? 'Chargement…' : countLabel(fragments.length)}
-      >
-        <Link to="/formulaire" className="button button-primary">
-          <FiPlus aria-hidden="true" />
-          Nouveau fragment
-        </Link>
-      </PageHeader>
+  const renderList = () => {
+    if (loading) return null
 
-      {error && <p className="form-error">{error}</p>}
-
-      {!loading && fragments.length === 0 ? (
+    if (fragments.length === 0) {
+      return (
         <EmptyState
           title="Aucun fragment pour l'instant"
           text="Ajoutez votre premier fragment de code pour le retrouver ici."
         >
-          <Link to="/formulaire" className="button button-primary">
-            <FiPlus aria-hidden="true" />
-            Créer un fragment
-          </Link>
+          <NewFragmentButton label="Créer un fragment" />
         </EmptyState>
-      ) : (
-        <section className="grid">
-          {fragments.map((fragment) => (
-            <FragmentCard
-              key={fragment.id}
-              fragment={fragment}
-              onView={() => setViewed(fragment)}
-              onEdit={() => setEdited(fragment)}
-              onDelete={() => handleDelete(fragment)}
-            />
-          ))}
-        </section>
+      )
+    }
+
+    if (visible.length === 0) {
+      return (
+        <EmptyState title="Aucun résultat" text="Essayez une autre recherche ou un autre tag." />
+      )
+    }
+
+    return (
+      <section className="grid">
+        {visible.map((fragment) => (
+          <FragmentCard
+            key={fragment.id}
+            fragment={fragment}
+            onView={() => setViewed(fragment)}
+            onEdit={() => setEdited(fragment)}
+            onDelete={() => handleDelete(fragment)}
+          />
+        ))}
+      </section>
+    )
+  }
+
+  return (
+    <>
+      <PageHeader
+        title="Fragments"
+        subtitle={loading ? 'Chargement…' : pluralize(fragments.length, 'fragment')}
+      >
+        <NewFragmentButton label="Nouveau fragment" />
+      </PageHeader>
+
+      {error && <p className="form-error">{error}</p>}
+
+      {fragments.length > 0 && (
+        <FilterBar
+          search={search}
+          onSearchChange={setSearch}
+          tags={groupByTag(fragments)}
+          activeTag={activeTag}
+          onTagChange={setActiveTag}
+        />
       )}
+
+      {renderList()}
 
       {viewed && (
         <Modal title={viewed.title} onClose={() => setViewed(null)} wide>
           <p className="tag tag-static">#{viewed.tag}</p>
           {viewed.content ? (
-            <SyntaxHighlighter language="javascript" style={oneDark} className="code-block">
-              {viewed.content}
-            </SyntaxHighlighter>
+            <CodeViewer code={viewed.content} tag={viewed.tag} />
           ) : (
             <p className="muted">Aucun code enregistré pour ce fragment.</p>
           )}
